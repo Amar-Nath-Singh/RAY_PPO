@@ -1,0 +1,55 @@
+Failure # 1 (occurred at 2024-07-24_20-38-32)
+[36mray::PPO.train()[39m (pid=29014, ip=10.21.139.236, actor_id=1f2ac60246b50b5d032a6b6c01000000, repr=PPO)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/tune/trainable/trainable.py", line 331, in train
+    raise skipped from exception_cause(skipped)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/tune/trainable/trainable.py", line 328, in train
+    result = self.step()
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/algorithm.py", line 870, in step
+    train_results, train_iter_ctx = self._run_one_training_iteration()
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/algorithm.py", line 3160, in _run_one_training_iteration
+    training_step_results = self.training_step()
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/ppo/ppo.py", line 428, in training_step
+    return self._training_step_old_and_hybrid_api_stacks()
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/ppo/ppo.py", line 571, in _training_step_old_and_hybrid_api_stacks
+    train_batch = synchronous_parallel_sample(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/execution/rollout_ops.py", line 100, in synchronous_parallel_sample
+    sampled_data = worker_set.foreach_worker(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/env/env_runner_group.py", line 897, in foreach_worker
+    _handle_remote_call_result_errors(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/env/env_runner_group.py", line 1234, in _handle_remote_call_result_errors
+    raise r.get()
+ray.exceptions.RayTaskError(ValueError): [36mray::RolloutWorker.apply()[39m (pid=29264, ip=10.21.139.236, actor_id=5ffb9662365b48041cc9400a01000000, repr=<ray.rllib.evaluation.rollout_worker.RolloutWorker object at 0x7759083ebd60>)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/utils/actor_manager.py", line 192, in apply
+    raise e
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/utils/actor_manager.py", line 181, in apply
+    return func(self, *args, **kwargs)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/execution/rollout_ops.py", line 102, in <lambda>
+    (lambda w: w.sample(**random_action_kwargs))
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/rollout_worker.py", line 685, in sample
+    batches = [self.input_reader.next()]
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/sampler.py", line 91, in next
+    batches = [self.get_data()]
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/sampler.py", line 273, in get_data
+    item = next(self._env_runner)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/env_runner_v2.py", line 348, in run
+    outputs = self.step()
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/env_runner_v2.py", line 374, in step
+    active_envs, to_eval, outputs = self._process_observations(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/env_runner_v2.py", line 641, in _process_observations
+    processed = policy.agent_connectors(acd_list)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/connectors/agent/pipeline.py", line 41, in __call__
+    ret = c(ret)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/connectors/connector.py", line 265, in __call__
+    return [self.transform(d) for d in acd_list]
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/connectors/connector.py", line 265, in <listcomp>
+    return [self.transform(d) for d in acd_list]
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/connectors/agent/obs_preproc.py", line 55, in transform
+    d[SampleBatch.NEXT_OBS] = self._preprocessor.transform(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/models/preprocessors.py", line 213, in transform
+    self.check_shape(observation)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/models/preprocessors.py", line 71, in check_shape
+    raise ValueError(
+ValueError: Observation ([0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0.] dtype=float32) outside given space (Box([-100.          -3.1415927 -100.          -1.       ], [100.          3.1415927 100.          1.       ], (4,), float32))!

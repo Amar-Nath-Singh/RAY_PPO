@@ -1,0 +1,41 @@
+Failure # 1 (occurred at 2024-08-03_03-50-17)
+The actor died because of an error raised in its creation task, [36mray::PPO.__init__()[39m (pid=455113, ip=10.21.139.236, actor_id=2c46deb8c4a37b82d1a47abe01000000, repr=PPO)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/env/env_runner_group.py", line 239, in _setup
+    self.add_workers(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/env/env_runner_group.py", line 799, in add_workers
+    raise result.get()
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/utils/actor_manager.py", line 500, in _fetch_result
+    result = ray.get(ready)
+ray.exceptions.ActorDiedError: The actor died because of an error raised in its creation task, [36mray::RolloutWorker.__init__()[39m (pid=455340, ip=10.21.139.236, actor_id=a5eaed48017550feb1e3ff9501000000, repr=<ray.rllib.evaluation.rollout_worker.RolloutWorker object at 0x7e135750fd00>)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/rollout_worker.py", line 532, in __init__
+    self._update_policy_map(policy_dict=self.policy_dict)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/rollout_worker.py", line 1737, in _update_policy_map
+    self._build_policy_map(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/rollout_worker.py", line 1848, in _build_policy_map
+    new_policy = create_policy_for_framework(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/utils/policy.py", line 141, in create_policy_for_framework
+    return policy_class(observation_space, action_space, merged_config)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/ppo/ppo_torch_policy.py", line 64, in __init__
+    self._initialize_loss_from_dummy_batch()
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/policy/policy.py", line 1445, in _initialize_loss_from_dummy_batch
+    postprocessed_batch = self.postprocess_trajectory(self._dummy_batch)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/ppo/ppo_torch_policy.py", line 215, in postprocess_trajectory
+    return compute_gae_for_sample_batch(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/postprocessing.py", line 204, in compute_gae_for_sample_batch
+    batch = compute_advantages(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/evaluation/postprocessing.py", line 131, in compute_advantages
+    rollout[Postprocessing.ADVANTAGES] = discount_cumsum(delta_t, gamma * lambda_)
+TypeError: can't multiply sequence by non-int of type 'float'
+
+During handling of the above exception, another exception occurred:
+
+[36mray::PPO.__init__()[39m (pid=455113, ip=10.21.139.236, actor_id=2c46deb8c4a37b82d1a47abe01000000, repr=PPO)
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/algorithm.py", line 545, in __init__
+    super().__init__(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/tune/trainable/trainable.py", line 158, in __init__
+    self.setup(copy.deepcopy(self.config))
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/algorithms/algorithm.py", line 631, in setup
+    self.workers = EnvRunnerGroup(
+  File "/home/guildstudent/miniconda3/envs/ray/lib/python3.10/site-packages/ray/rllib/env/env_runner_group.py", line 191, in __init__
+    raise e.args[0].args[2]
+TypeError: can't multiply sequence by non-int of type 'float'
