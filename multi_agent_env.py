@@ -49,7 +49,7 @@ class MultiAgentShipEnvironment(MultiAgentEnv):
         initial_state = np.array([1, 0, 0, start_x, start_y, np.random.uniform(-np.pi, np.pi), 0, 115.5 / 60, start_x, start_y, goal_x, goal_y], dtype=np.float64)
         return initial_state
     
-    def update_agent_state(self, agent_id, desired_yaw):
+    def update_agent_state(self, agent_id, yaw_err):
         tspan = (0, 0.3)
         agent = self.agents[agent_id]
         yinit = agent[:7]
@@ -57,7 +57,7 @@ class MultiAgentShipEnvironment(MultiAgentEnv):
         # PD Controller
         yaw = agent[5]
         r = agent[2]
-        delta_c = np.clip(3.5 * ssa(desired_yaw - yaw) - 4.0 * r, -np.radians(35), np.radians(35))
+        delta_c = np.clip(3.5 * yaw_err - 4.0 * r, -np.radians(35), np.radians(35))
 
         sol = solve_ivp(lambda t, v: KCS_ode(t, v, delta_c), tspan, yinit, t_eval=tspan, dense_output=True)
         agent[:7] = np.array(sol.y, dtype=np.float64).T[-1]
@@ -117,7 +117,7 @@ class MultiAgentShipEnvironment(MultiAgentEnv):
         R2 = 1.3 * np.exp(-10.0 * abs(course_angle_err)) - 0.3
         R3 = -0.25 * distance_to_waypoint
 
-        observations = np.array([cross_track_error, course_angle_err, distance_to_waypoint, r, yaw])
+        observations = np.array([cross_track_error, course_angle_err, distance_to_waypoint, r])
         total_reward = R1 + R2 + R3 
         terminated = False
         truncated = False

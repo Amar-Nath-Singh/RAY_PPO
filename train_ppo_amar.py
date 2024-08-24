@@ -24,8 +24,8 @@ params = {
 }
 
 # Define the observation and action spaces for the agents
-obs_space = spaces.Box(low=np.array([-100, -np.pi, -100, -1, -np.pi], dtype=np.float64), 
-                       high=np.array([100, np.pi, 100, 1, np.pi], dtype=np.float64))
+obs_space = spaces.Box(low=np.array([-100, -np.pi, -100, -1], dtype=np.float64), 
+                       high=np.array([100, np.pi, 100, 1], dtype=np.float64))
 
 act_space = spaces.Box(low=-np.radians(180), high=np.radians(180), shape=(1,), dtype=np.float64)
 
@@ -43,11 +43,11 @@ config.model = {
 
 config.training(
     clip_param = 0.2,
-    lambda_ = 0.93,
-    entropy_coeff = 0.0001,
+    lambda_ = 0.95,
+    entropy_coeff = 0.001,
 )
 config.lr = 0.001
-config.gamma = 0.9
+config.gamma = 0.95
 config.timesteps_per_iteration = 50 * params['max_steps']
 
 # Multi-agent setup
